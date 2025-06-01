@@ -1,0 +1,333 @@
+/* static/style.css */
+body {
+    font-family: sans-serif;
+    margin: 0;
+    display: flex;
+    height: 100vh;
+    overflow: hidden; /* スクロールバーをコンテナ内に限定 */
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+/* 左ペイン */
+.left-pane {
+    width: 30%;
+    min-width: 200px;
+    background-color: #f0f0f0;
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    transition: width 0.1s ease; /* 開閉をアニメーションで滑らかに */
+}
+
+/* ペイン間のリサイズバー */
+.pane-resizer {
+    width: 30px; / ボタンを収める分広げる */
+    background-color: #ccc;
+    cursor: col-resize;
+    height: 100%;
+    position: relative;
+}
+
+/* 右ペイン */
+.right-pane {
+    flex-grow: 1;
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* 左ペインを閉じた状態 */
+.left-pane.closed {
+    width: 0;
+    min-width: 0;
+    overflow: hidden;
+    padding: 0;
+}
+
+/* 左ペインを閉じたときはリサイズバーの背景だけ表示 */
+.left-pane.closed + .pane-resizer {
+background-color: transparent;
+}
+
+/* 左ペイン開閉ボタン */
+.toggle-left-pane-btn {
+    position: absolute;
+    top: 10px;
+    left: 0px;
+    z-index: 1000;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    padding: 5px 10px;
+    font-size: 1em;
+    border-radius: 4px;
+}
+
+/* 既存の .tabs, .tab-button, .tab-content, #editorToolbar などのスタイルは省略 */
+/* 必要に応じて、元ファイルのスタイルをまるっと残してお使いください。 */
+
+.hidden {
+    display: none !important;
+}
+
+.tabs {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.tab-button {
+    background-color: #e0e0e0;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    margin-right: 5px;
+    border-radius: 4px;
+}
+
+.tab-button.active {
+    background-color: #fff;
+    border-bottom: 1px solid #fff; /* タブコンテンツとの境界を滑らかに */
+}
+
+.tab-content {
+    display: none; /* 初期状態では非表示 */
+}
+
+.tab-content.active {
+display: block;
+}
+
+.action-bar {
+    margin-bottom: 10px;
+}
+
+#memoList div, #tagList div, #searchResults div {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+}
+#memoList div:hover, #tagList div:hover, #searchResults div:hover {
+    background-color: #e9e9e9;
+}
+#memoList div.selected, #searchResults div.selected {
+    background-color: #d0e0ff;
+}
+
+
+#editorToolbar {
+display: flex;
+align-items: center;
+    margin-bottom: 10px;
+}
+#editorToolbar input[type="text"] {
+margin-right: 10px;
+padding: 5px;
+border: 1px solid #ccc;
+border-radius: 4px;
+}
+
+#editorToolbar button {
+padding: 5px 10px;
+border: 1px solid #ccc;
+background-color: #fff;
+cursor: pointer;
+border-radius: 4px;
+}
+
+#memoTitle {
+    flex-grow: 1; /* タイトル入力欄が可能な限り幅を取る */
+    padding: 8px;
+    font-size: 1.2em;
+    border: 1px solid #ccc;
+}
+
+#memoTagsContainer {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+#memoCurrentTags .tag-chip {
+    background-color: #007bff;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.9em;
+    margin-right: 5px;
+}
+#memoTagInput {
+    padding: 8px;
+    border: 1px solid #ccc;
+}
+#tagSuggestions {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    z-index: 1000;
+    max-height: 150px;
+    overflow-y: auto;
+}
+#tagSuggestions div {
+    padding: 5px;
+    cursor: pointer;
+}
+#tagSuggestions div:hover {
+    background-color: #f0f0f0;
+}
+
+
+#editorContainer {
+    flex-grow: 1; /* メモ内容入力欄が残りの高さを取る */
+    display: flex;
+    flex-direction: column;
+}
+
+#memoContent {
+flex-grow: 1;
+resize: none;
+padding: 10px;
+border: 1px solid #ccc;
+border-radius: 4px;
+font-family: monospace;
+font-size: 1em;
+}
+
+#markdownPreview {
+flex-grow: 1;
+padding: 10px;
+border: 1px solid #ccc;
+border-radius: 4px;
+background-color: #fff;
+overflow-y: auto;
+
+}
+
+.hidden {
+    display: none !important; /* !importantで確実に非表示 */
+}
+
+.memo-meta {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-top: 10px;
+font-size: 0.9em;
+color: #555;
+border-top: 1px solid #ddd;
+padding-top: 5px;
+}
+
+
+.memo-meta .timestamps {
+/* 左側に固定 */
+}
+
+#saveStatus {
+/* 右側に表示される */
+color: green;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+.pagination button, .pagination span {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+.pagination button.disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+.pagination span {
+    cursor: default;
+}
+.tag-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+.tag-item:hover {
+    background-color: #e9e9e9;
+}
+
+.tag-name {
+    cursor: pointer;
+    flex-grow: 1;
+}
+
+.favorite-toggle-btn {
+    padding: 2px 4px; 
+    font-size: 1.2em; 
+    cursor: pointer;
+    border: none; 
+    background-color: transparent; 
+    margin-left: 10px;
+    color: #555; /* 星の色を指定 (例) */
+}
+.favorite-toggle-btn:hover {
+    color: #000; 
+    /* background-color: #e0e0e0; /* ホバー時の背景を元に戻すか、別の効果 */
+}
+
+.tag-list-container {
+    margin-bottom: 15px; /* 各タグリストセクション間のスペース */
+}
+
+#toggleMarkdownPreview {
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    line-height: 1;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.memo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+}
+.memo-item:hover {
+    background-color: #e9e9e9;
+}
+.memo-item.selected {
+    background-color: #d0e0ff;
+}
+.memo-title {
+    flex-grow: 1;
+    /* 必要に応じて文字あふれ制御など */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.trash-btn {
+    margin-left: 10px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 1.2em; /* アイコンサイズ調整 */
+}
+.trash-btn:hover {
+    color: red; /* ホバー時の色変更など */
+}

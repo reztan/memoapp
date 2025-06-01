@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>メモアプリ</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="left-pane" id="leftPane">
+            <div class="tabs">
+                <button class="tab-button active" data-tab="memo-list-tab" title="メモ一覧">📝 </button>
+                <button class="tab-button" data-tab="tag-list-tab" title="タグ一覧">🏷️</button>
+                <button class="tab-button" data-tab="search-tab" title="検索">🔍</button>
+                <button class="tab-button" data-tab="trash-tab" title="ゴミ箱">🗑</button>
+            </div>
+
+            <div class="tab-content active" id="memo-list-tab-content">
+                <div class="action-bar">
+                    <button id="newMemoButton" title="新規メモ作成">➕</button>
+                </div>
+                <div id="memoList"></div>
+                <div class="pagination" id="memoListPagination"></div>
+            </div>
+
+            <div class="tab-content" id="tag-list-tab-content">
+                <div id="favoriteTagList" class="tag-list-container"></div>
+
+                <hr/>
+                <div id="tagList" class="tag-list-container"></div>
+                <div class="pagination" id="tagListPagination"></div>
+            </div>
+
+            <div class="tab-content" id="search-tab-content">
+                <h4>全文検索</h4>
+                <input type="text" id="fullTextSearchInput" placeholder="キーワードを入力...">
+                <h4>タグ検索</h4>
+                <input type="text" id="tagSearchInput" placeholder="タグをカンマ区切りで入力...">
+                <button id="searchButton">検索実行</button>
+                <div id="searchResults"></div>
+                <div class="pagination" id="searchResultPagination"></div>
+            </div>
+            
+            <div class="tab-content" id="trash-tab-content">
+                <div id="trashMemoList"></div>
+                <button id="emptyTrashButton">ゴミ箱を空にする</button>
+            </div>
+        </div>
+
+    <div class="pane-resizer" id="paneResizer">
+        <!-- 左ペイン開閉ボタンをリサイズバー内に移動 -->
+        <button id="toggleLeftPane" class="toggle-left-pane-btn">≡</button>
+            </div>
+
+        <div class="right-pane" id="rightPane">
+            <div id="editorToolbar">
+                <input type="text" id="memoTitle" placeholder="タイトル" disabled>
+                <div id="memoTagsContainer">
+                    <span id="memoCurrentTags"></span>
+                    <input type="text" id="memoTagInput" placeholder="タグを追加 (Enterで確定)" disabled>
+                    <div id="tagSuggestions"></div>
+                </div>
+                <button id="toggleMarkdownPreview"  title="Markdownプレビュー" disabled>👁︎</button>
+            </div>
+            <div id="editorContainer">
+                <textarea id="memoContent" placeholder="メモ内容を入力..." disabled></textarea>
+                <div id="markdownPreview" class="hidden"></div>
+            </div>
+            <div class="memo-meta">
+            <div class="timestamps">
+                作成日時: <span id="createdAt">---</span> |
+                最終更新日時: <span id="updatedAt">---</span>
+            </div>
+            <span id="saveStatus"></span>
+        </div>
+    </div>
+</div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
