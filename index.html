@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>メモアプリ</title>
     <link rel="stylesheet" href="/static/style.css">
+    <link id="customMarkdownCss" rel="stylesheet" href="/static/custom.css" disabled>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
@@ -34,10 +35,7 @@
             </div>
 
             <div class="tab-content" id="search-tab-content">
-                <h4>全文検索</h4>
                 <input type="text" id="fullTextSearchInput" placeholder="キーワードを入力...">
-                <h4>タグ検索</h4>
-                <input type="text" id="tagSearchInput" placeholder="タグをカンマ区切りで入力...">
                 <button id="searchButton">検索実行</button>
                 <div id="searchResults"></div>
                 <div class="pagination" id="searchResultPagination"></div>

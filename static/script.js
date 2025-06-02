@@ -18,7 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const otherTagListPaginationEl = document.getElementById('tagListPagination');
 
     const fullTextSearchInput = document.getElementById('fullTextSearchInput');
-    const tagSearchInput = document.getElementById('tagSearchInput');
     const searchButton = document.getElementById('searchButton');
     const searchResultsEl = document.getElementById('searchResults');
     const searchResultPaginationEl = document.getElementById('searchResultPagination');
@@ -31,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const memoContentInput = document.getElementById('memoContent');
     const markdownPreviewEl = document.getElementById('markdownPreview');
     const toggleMarkdownPreviewButton = document.getElementById('toggleMarkdownPreview');
+    const userCssLink = document.getElementById('customMarkdownCss');
     const saveStatusEl = document.getElementById('saveStatus');
     const createdAtEl = document.getElementById('createdAt');
     const updatedAtEl = document.getElementById('updatedAt');
@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 div.classList.add('selected');
             }
             const trashBtn = document.createElement('button');
-            trashBtn.textContent = '🗑'; // アイコンや文字はお好みで
+            trashBtn.textContent = '🗑';
             trashBtn.classList.add('trash-btn');
             trashBtn.title = 'ゴミ箱に移動';
             trashBtn.addEventListener('click', async (e) => {
@@ -329,10 +329,15 @@ document.addEventListener('DOMContentLoaded', () => {
             saveStatusEl.style.color = 'green';
             // メモ一覧のタイトルも更新（もし表示されていれば）
             const memoInList = memoListEl.querySelector(`div[data-id="${currentMemoId}"]`);
-            if (memoInList) memoInList.textContent = updatedMemo.title || '無題のメモ';
+            if (memoInList) {
+                const titleSpan = memoInList.querySelector('.memo-title');
+                if (titleSpan) titleSpan.textContent = updatedMemo.title || '無題のメモ';
+            }
             const memoInSearch = searchResultsEl.querySelector(`div[data-id="${currentMemoId}"]`);
-            if (memoInSearch) memoInSearch.textContent = updatedMemo.title || '無題のメモ';
-
+            if (memoInSearch) {
+                const titleSpanSearch = memoInSearch.querySelector('.memo-title');
+                if (titleSpanSearch) titleSpanSearch.textContent = updatedMemo.title || '無題のメモ';
+            }
         } else {
             saveStatusEl.textContent = '保存失敗';
             saveStatusEl.style.color = 'red';
@@ -349,10 +354,16 @@ document.addEventListener('DOMContentLoaded', () => {
             showPreview();
             toggleMarkdownPreviewButton.textContent = '✎';
             toggleMarkdownPreviewButton.title = '編集';
+            if (userCssLink) {
+                userCssLink.disabled = false;
+            }
         } else {
             showEditor();
             toggleMarkdownPreviewButton.textContent = '👁︎';
             toggleMarkdownPreviewButton.title = 'Markdownプレビュー';
+            if (userCssLink) {
+                userCssLink.disabled = true;
+            }
         }
     });
 
@@ -509,8 +520,7 @@ document.addEventListener('DOMContentLoaded', () => {
             nameSpan.dataset.tagName = tag.name;
             nameSpan.addEventListener('click', () => {
                 document.querySelector('.tab-button[data-tab="search-tab"]').click();
-                fullTextSearchInput.value = '';
-                tagSearchInput.value = tag.name;
+                fullTextSearchInput.value = '@tags:'+tag.name;
                 performSearch(1);
             });
 
@@ -556,25 +566,19 @@ document.addEventListener('DOMContentLoaded', () => {
             performSearch(1);
         }
     });
-    tagSearchInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-            performSearch(1);
-        }
-    });
+
     async function performSearch(page = 1) {
         currentSearchResultPage = page;
         const query = fullTextSearchInput.value.trim();
-        const tags = tagSearchInput.value.trim();
 
-        if (!query && !tags) {
+        if (!query) {
             searchResultsEl.innerHTML = '<p>検索キーワードまたはタグを入力してください。</p>';
             renderPagination(0, 1, searchResultPaginationEl, performSearch); // ページネーションをクリア
             return;
         }
 
         let url = `/api/search/notes?page=${page}&limit=${ITEMS_PER_PAGE}`;
-        if (query) url += `&query=${encodeURIComponent(query)}`;
-        if (tags) url += `&tags=${encodeURIComponent(tags)}`;
+        url += `&query=${encodeURIComponent(query)}`;
 
         const data = await fetchData(url);
         if (data && data.notes) {

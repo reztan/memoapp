@@ -1,0 +1,9 @@
+/* static/custom.css */
+/* プレビュー時の背景をグレーに */
+#markdownPreview {
+    background-color: #f9f9f9;
+}
+/* 見出し（h1）を赤く */
+#markdownPreview h1 {
+    color: red;
+}

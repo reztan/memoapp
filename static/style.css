@@ -188,6 +188,7 @@ border-radius: 4px;
     flex-grow: 1; /* メモ内容入力欄が残りの高さを取る */
     display: flex;
     flex-direction: column;
+    min-height: 0;
 }
 
 #memoContent {
@@ -198,6 +199,7 @@ border: 1px solid #ccc;
 border-radius: 4px;
 font-family: monospace;
 font-size: 1em;
+min-height: 0; 
 }
 
 #markdownPreview {
@@ -207,7 +209,7 @@ border: 1px solid #ccc;
 border-radius: 4px;
 background-color: #fff;
 overflow-y: auto;
-
+min-height: 0;
 }
 
 .hidden {
